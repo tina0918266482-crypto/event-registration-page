@@ -386,35 +386,36 @@
       font-weight: 700;
     }
 
-   .footer-logo {
-  margin-top: 18px;
+   .footer {
+  padding: 30px 0 46px;
+  text-align: center;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+}
+
+.footer-text {
+  margin-bottom: 18px;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.footer-logo {
   display: flex;
   justify-content: center;
 }
 
-.footer-logo-dark a {
+.footer-logo a {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: 14px 22px;
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.65);
 }
 
 .footer-logo-img {
-  height: 52px;
+  height: 74px;
   width: auto;
   display: block;
 }
-    
-    .logo-mark {
-      margin-top: 18px;
-      font-size: 2.1rem;
-      letter-spacing: 0.08em;
-      color: var(--primary);
-      font-weight: 800;
-      font-family: Arial, sans-serif;
-    }
 
     @media (max-width: 900px) {
       .grid-2,
@@ -629,14 +630,14 @@
   </main>
 
   <footer class="footer">
-    德瑪凱股份有限公司 敬邀
-    <div class="footer-logo footer-logo-dark">
-  <a href="https://www.dmedcare.com/" target="_blank" rel="noopener noreferrer">
-    <img src="logo.png" alt="德瑪凱 Logo" class="footer-logo-img">
-  </a>
-</div>
-  </footer>
+  <div class="footer-text">德瑪凱股份有限公司 敬邀</div>
 
+  <div class="footer-logo">
+    <a href="https://www.dmedcare.com/" target="_blank" rel="noopener noreferrer">
+      <img src="footer-logo.png" alt="德瑪凱 Logo" class="footer-logo-img">
+    </a>
+  </div>
+</footer>
   <script>
     // =========================
     // 可改功能區：Google Apps Script 網址
