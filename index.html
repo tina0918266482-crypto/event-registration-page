@@ -157,7 +157,21 @@
       letter-spacing: 0.16em;
       box-shadow: 0 12px 24px rgba(10, 124, 171, 0.2);
     }
+.brand {
+  display: flex;
+  align-items: center;
+}
 
+.brand a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-logo {
+  height: 42px;
+  width: auto;
+  display: block;
+}
     .diamond {
       font-size: 1.4rem;
       letter-spacing: 0.8em;
@@ -425,14 +439,19 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">德瑪凱醫學領航沙龍</div>
-      <nav class="nav">
-        <a href="#intro">活動介紹</a>
-        <a href="#agenda">活動流程</a>
-        <a href="#register">立即報名</a>
-      </nav>
+  <div class="container topbar-inner">
+    <div class="brand">
+      <a href="https://www.dmedcare.com/" target="_blank" rel="noopener noreferrer">
+        <img src="logo.png" alt="德瑪凱 Logo" class="brand-logo">
+      </a>
     </div>
+
+    <nav class="nav">
+      <a href="#intro">活動介紹</a>
+      <a href="#agenda">活動流程</a>
+      <a href="#register">立即報名</a>
+    </nav>
+</div>
   </header>
 
   <main>
