@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>德瑪凱醫學領航沙龍｜活動報名</title>
+
+  <!--
+    可自行修改的重點：
+    1. 色系：看 :root
+    2. 主標/副標/活動資訊：看 HERO 區塊
+    3. 流程內容：看 AGENDA 區塊
+    4. 表單送出網址：看 JS 最下面的 APPS_SCRIPT_URL
+  -->
+
+  <style>
+    /*
+      JPG 底圖更換方式：
+      1. 把你的背景圖檔名稱改成 bg.jpg
+      2. 與 index.html 放在同一層
+      3. 之後只要替換 bg.jpg，就能直接換整體風格
+    */
+    /* =========================
+       可改風格區：色彩 / 字體 / 圓角
+       ========================= */
+    :root {
+      --bg-main: #f7f4ef;
+      --ink: #4c4544;
+      --muted: #746d6b;
+      --primary: #0b7cab;
+      --primary-dark: #075a7b;
+      --gold: #d7ad59;
+      --card: rgba(255,255,255,0.72);
+      --card-border: rgba(255,255,255,0.45);
+      --shadow: 0 20px 50px rgba(86, 72, 56, 0.09);
+      --radius-xl: 34px;
+      --radius-lg: 20px;
+      --max-width: 1180px;
+      --heading-font: "Noto Serif TC", "Microsoft JhengHei", serif;
+      --body-font: "Noto Serif TC", "Microsoft JhengHei", serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--body-font);
+      background:
+        linear-gradient(rgba(248,245,241,0.35), rgba(248,245,241,0.35)),
+        url('bg.jpg') center center / cover no-repeat fixed;
+      min-height: 100vh;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 55% 30%, rgba(255,255,255,0.45), transparent 18%),
+        radial-gradient(circle at 30% 72%, rgba(255,255,255,0.35), transparent 22%),
+        radial-gradient(circle at 82% 86%, rgba(255,245,230,0.3), transparent 12%);
+      filter: blur(12px);
+      opacity: 0.75;
+      z-index: 0;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max-width));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.32);
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .topbar-inner {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      font-family: var(--heading-font);
+      letter-spacing: 0.16em;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .hero {
+      padding: 92px 0 56px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-family: var(--heading-font);
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      letter-spacing: 0.18em;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .hero-sub {
+      margin: 0 0 20px;
+      font-size: clamp(1.15rem, 2vw, 1.8rem);
+      letter-spacing: 0.22em;
+    }
+
+    .hero-pill {
+      display: inline-block;
+      margin: 10px 0 18px;
+      padding: 12px 34px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-size: clamp(1rem, 1.7vw, 1.34rem);
+      letter-spacing: 0.16em;
+      box-shadow: 0 12px 24px rgba(10, 124, 171, 0.2);
+    }
+
+    .diamond {
+      font-size: 1.4rem;
+      letter-spacing: 0.8em;
+      margin: 8px 0 22px;
+    }
+
+    .glass-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .intro-card {
+      max-width: 860px;
+      margin: 0 auto 22px;
+      padding: 34px 32px;
+      font-size: clamp(1rem, 1.4vw, 1.24rem);
+      letter-spacing: 0.08em;
+    }
+
+    .hero-info {
+      margin-top: 18px;
+      color: var(--primary);
+    }
+
+    .hero-date {
+      font-size: clamp(1.35rem, 2.4vw, 2.2rem);
+      letter-spacing: 0.16em;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .hero-location {
+      margin-top: 10px;
+      font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+      letter-spacing: 0.12em;
+      line-height: 1.8;
+    }
+
+    .hero-note {
+      max-width: 860px;
+      margin: 26px auto 0;
+      font-size: clamp(1rem, 1.35vw, 1.18rem);
+      letter-spacing: 0.12em;
+      line-height: 2;
+    }
+
+    .cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 180px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--heading-font);
+      font-size: 1rem;
+      letter-spacing: 0.14em;
+      transition: 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(10, 124, 171, 0.18);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.8);
+      color: var(--ink);
+      border: 1px solid rgba(76, 69, 68, 0.12);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    section { padding: 34px 0 56px; }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.55rem, 2.4vw, 2.3rem);
+      letter-spacing: 0.16em;
+      margin: 0 0 8px;
+      font-family: var(--heading-font);
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      margin: 0 0 28px;
+      letter-spacing: 0.08em;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .agenda-card,
+    .form-card,
+    .info-card {
+      padding: 30px;
+    }
+
+    .agenda-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed rgba(76,69,68,0.12);
+      font-size: clamp(1rem, 1.3vw, 1.18rem);
+    }
+
+    .agenda-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .agenda-time {
+      letter-spacing: 0.16em;
+      font-weight: 700;
+    }
+
+    .info-block {
+      text-align: center;
+      padding: 18px 10px;
+    }
+
+    .info-big {
+      color: var(--primary);
+      font-size: clamp(1.3rem, 2vw, 1.9rem);
+      letter-spacing: 0.14em;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .info-small {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.94rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(76,69,68,0.12);
+      background: rgba(255,255,255,0.86);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-note,
+    .success-msg {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .success-msg {
+      display: none;
+      font-weight: 700;
+    }
+
+    .footer {
+      padding: 30px 0 46px;
+      text-align: center;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      font-size: 0.95rem;
+    }
+
+    .logo-mark {
+      margin-top: 18px;
+      font-size: 2.1rem;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      font-weight: 800;
+      font-family: Arial, sans-serif;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2,
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .agenda-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        flex-direction: column;
+        justify-content: center;
+        padding: 12px 0;
+      }
+
+      .nav {
+        justify-content: center;
+        gap: 14px;
+        font-size: 0.9rem;
+      }
+
+      .hero {
+        padding-top: 58px;
+      }
+
+      .intro-card,
+      .agenda-card,
+      .form-card,
+      .info-card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">德瑪凱醫學領航沙龍</div>
+      <nav class="nav">
+        <a href="#intro">活動介紹</a>
+        <a href="#agenda">活動流程</a>
+        <a href="#register">立即報名</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <h1>德瑪凱醫學領航沙龍</h1>
+        <p class="hero-sub">診所營收成長雙引擎計畫</p>
+        <div class="hero-pill">穩定現金流 × 高單價療程佈局</div>
+        <div class="diamond">◆ ◆ ◆</div>
+
+        <div id="intro" class="glass-card intro-card">
+          誠摯邀請您蒞臨德瑪凱醫學領航沙龍。<br>
+          本次以真實診所案例結合現場實機展示，分享複合式療程應用與設備配置策略，
+          協助醫師建立穩定高品質客群，打造具長期價值的診所營運模式。<br>
+          於小型尊榮場域中，與同儕醫師深度交流，共創專業與經營並進的下一階段成長。
+        </div>
+
+        <div class="hero-info">
+          <div class="hero-date">MON | 03.02 | 2026<br>10:00AM–01:00PM</div>
+          <div class="hero-location">萊似醫美總部<br>（台北市大安區忠孝東路四段55號10樓）</div>
+        </div>
+
+        <div class="hero-note">
+          本活動採邀請制，名額有限，敬請提前回覆保留席次。<br>
+          出席即贈私密潔膚露乙瓶。
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#register">立即報名</a>
+          <a class="btn btn-secondary" href="#agenda">查看流程</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- AGENDA + INFO -->
+    <section id="agenda">
+      <div class="container">
+        <h2 class="section-title">活動流程</h2>
+        <p class="section-sub">可直接修改下列時間與內容</p>
+
+        <div class="grid-2">
+          <div class="glass-card agenda-card">
+            <div class="diamond">◆ ◆ ◆</div>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-time">10:00</div>
+                <div>入場</div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-time">10:15 – 11:15</div>
+                <div>Duet-V 臉部電波示範</div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-time">11:15 – 11:30</div>
+                <div>休息</div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-time">11:30 – 12:15</div>
+                <div>Duet-V 私密處電波示範</div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-time">12:20</div>
+                <div>取用茶點會後交流</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card info-card">
+            <div class="diamond">◆ ◆ ◆</div>
+            <div class="info-block">
+              <div class="info-big">高質感場域交流</div>
+              <div class="info-small">小型沙龍形式，提升互動與交流品質</div>
+            </div>
+            <div class="info-block">
+              <div class="info-big">真實案例 × 現場實機</div>
+              <div class="info-small">以實際應用展示療程策略與設備配置</div>
+            </div>
+            <div class="info-block">
+              <div class="info-big">營運與療程雙軸成長</div>
+              <div class="info-small">協助建立穩定現金流與高單價佈局</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register">
+      <div class="container">
+        <h2 class="section-title">席次回覆</h2>
+        <p class="section-sub">填寫以下資料後，將自動送至報名統計表</p>
+
+        <div class="glass-card form-card">
+          <form id="event-form">
+            <div class="field-grid">
+              <div class="field">
+                <label for="name">姓名</label>
+                <input id="name" type="text" placeholder="請輸入您的姓名" required />
+              </div>
+              <div class="field">
+                <label for="company">公司名稱 / 診所名稱</label>
+                <input id="company" type="text" placeholder="請輸入公司或診所名稱" />
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="title">職稱</label>
+                <input id="title" type="text" placeholder="請輸入職稱" />
+              </div>
+              <div class="field">
+                <label for="phone">聯絡電話</label>
+                <input id="phone" type="tel" placeholder="請輸入聯絡電話" required />
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" type="email" placeholder="請輸入 Email" required />
+              </div>
+              <div class="field">
+                <label for="attend">參加場次</label>
+                <select id="attend" required>
+                  <option value="">請選擇場次</option>
+                  <option value="3/2 台北場">3/2 台北場</option>
+                  <option value="後續候補通知">後續候補通知</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="message">備註 / 想詢問的問題</label>
+              <textarea id="message" placeholder="可先留下您想了解的內容"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="consent">個資同意</label>
+              <select id="consent" required>
+                <option value="">請選擇</option>
+                <option value="我同意主辦單位蒐集本次活動聯繫所需之個人資料">我同意主辦單位蒐集本次活動聯繫所需之個人資料</option>
+              </select>
+            </div>
+
+            <div class="form-note">送出表單即表示您同意主辦單位蒐集本次活動聯繫所需之個人資料。</div>
+            <div class="cta-row" style="margin-top:6px;">
+              <button class="btn btn-primary" type="submit">送出報名</button>
+            </div>
+            <div id="form-success" class="success-msg">已送出報名資料，我們會盡快與您聯繫。</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    德瑪凱股份有限公司 敬邀
+    <div class="logo-mark">DMC+</div>
+  </footer>
+
+  <script>
+    // =========================
+    // 可改功能區：Google Apps Script 網址
+    // =========================
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxe2ryTM6cA2c29oSc78BonYQ1RkTKEfm19a-7OEIwC3_rZxT92jDm4PcaYZJqM1uLVIA/exec';
+
+    const form = document.getElementById('event-form');
+    const successMessage = document.getElementById('form-success');
+
+    if (form) {
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const payload = {
+          name: document.getElementById('name')?.value || '',
+          company: document.getElementById('company')?.value || '',
+          title: document.getElementById('title')?.value || '',
+          phone: document.getElementById('phone')?.value || '',
+          email: document.getElementById('email')?.value || '',
+          session: document.getElementById('attend')?.value || '',
+          message: document.getElementById('message')?.value || '',
+          consent: document.getElementById('consent')?.value || ''
+        };
+
+        try {
+          await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          successMessage.style.display = 'block';
+          successMessage.style.color = '#0b6b3a';
+          successMessage.textContent = '已送出報名資料，我們會盡快與您聯繫。';
+          form.reset();
+        } catch (error) {
+          successMessage.style.display = 'block';
+          successMessage.style.color = '#b42318';
+          successMessage.textContent = '送出失敗，請稍後再試。';
+          console.error(error);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
